@@ -69,7 +69,8 @@ const LoginPage = () => {
   const [localError, setLocalError] = useState(null);
 
   if (token && user) {
-    const dest = location.state?.from?.pathname || '/home';
+    let dest = location.state?.from?.pathname;
+    if (!dest) dest = user.role === 'admin' ? '/admin/dashboard' : '/home';
     return <Navigate to={dest} replace />;
   }
 
@@ -85,16 +86,24 @@ const LoginPage = () => {
     e.preventDefault();
     setLocalError(null);
     try {
+      let loggedInUser;
       if (mode === 'login') {
-        await login({ email: form.email.trim(), password: form.password });
+        const res = await login({ email: form.email.trim(), password: form.password });
+        loggedInUser = res.user;
       } else {
         if (form.password.length < 8) {
           setLocalError('Password must be at least 8 characters.');
           return;
         }
-        await register({ email: form.email.trim(), password: form.password, name: form.name.trim() });
+        const res = await register({ email: form.email.trim(), password: form.password, name: form.name.trim() });
+        loggedInUser = res.user;
       }
-      navigate('/home', { replace: true });
+      
+      if (loggedInUser?.role === 'admin') {
+        navigate('/admin/dashboard', { replace: true });
+      } else {
+        navigate('/home', { replace: true });
+      }
     } catch (err) {
       setLocalError(err.message || 'Unable to authenticate.');
     }
@@ -289,21 +298,6 @@ const LoginPage = () => {
             </Button>
           </Stack>
 
-          <Typography
-            variant="caption"
-            align="center"
-            sx={{ display: 'block', mt: 3, color: '#A09F97', fontSize: '11px' }}
-          >
-            By continuing you accept the fair-use exam rules.{' '}
-            <Link
-              href="https://github.com/Kash15if"
-              target="_blank"
-              rel="noreferrer"
-              sx={{ color: '#6B6A62', textDecorationColor: '#DDD8C9' }}
-            >
-              Learn more
-            </Link>
-          </Typography>
         </CardContent>
       </Card>
     </Box>

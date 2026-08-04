@@ -1,5 +1,4 @@
 import { Alert, AppBar, Avatar, Box, Button, Stack, Toolbar, Typography } from '@mui/material';
-import SchoolRoundedIcon from '@mui/icons-material/SchoolRounded';
 import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -20,39 +19,87 @@ const AppHeader = () => {
     .slice(0, 2)
     .join('')
     .toUpperCase();
+    
+  const displayId = user?.id ? String(user.id).substring(0, 4).toUpperCase() : '0000';
 
   return (
     <>
-      <AppBar position="sticky" elevation={0}>
-        <Toolbar sx={{ gap: 2 }}>
+      <AppBar position="sticky" elevation={0} sx={{ bgcolor: '#F6F4EF', borderBottom: '1px solid #DDD8C9' }}>
+        <Toolbar sx={{ gap: 2, minHeight: '64px' }}>
+          {/* Brand Mark */}
           <Stack direction="row" alignItems="center" spacing={1.5} sx={{ flexGrow: 1 }}>
-            <SchoolRoundedIcon />
-            <Typography variant="h6" sx={{ fontWeight: 700, letterSpacing: '-0.01em' }}>
-              Online Exam Portal
+            <Box
+              sx={{
+                width: 26,
+                height: 26,
+                border: '2px solid #C97A1A',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxSizing: 'border-box'
+              }}
+            >
+              <Box sx={{ width: 6, height: 6, bgcolor: '#0F7A5C', borderRadius: '50%' }} />
+            </Box>
+            <Typography
+              variant="h6"
+              sx={{
+                fontFamily: '"Space Grotesk", sans-serif',
+                fontWeight: 500,
+                letterSpacing: '-0.01em',
+                fontSize: '18px'
+              }}
+            >
+              <Box component="span" sx={{ color: '#16201C' }}>VIGILANT</Box>
+              <Box component="span" sx={{ color: '#0F7A5C' }}>-TEST</Box>
             </Typography>
           </Stack>
 
+          {/* User Info Block */}
           {user && (
-            <Stack direction="row" alignItems="center" spacing={1.5}>
-              <Box sx={{ display: { xs: 'none', sm: 'block' }, textAlign: 'right' }}>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  {user.name || user.email}
-                </Typography>
-                <Typography variant="caption" sx={{ opacity: 0.85 }}>
-                  {user.role}
-                  {bypass ? ' \u00b7 bypass' : ''}
-                </Typography>
-              </Box>
-              <Avatar sx={{ bgcolor: 'rgba(255,255,255,0.2)', fontSize: 14, fontWeight: 700 }}>
-                {initials}
-              </Avatar>
+            <Stack direction="row" alignItems="center" spacing={3}>
+              <Stack direction="row" alignItems="center" spacing={1.5}>
+                <Avatar sx={{ bgcolor: '#E1F5EE', color: '#085041', fontSize: 13, fontWeight: 600, width: 36, height: 36 }}>
+                  {initials}
+                </Avatar>
+                <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+                  <Typography sx={{ fontWeight: 500, fontSize: '13px', color: '#16201C', lineHeight: 1.2 }}>
+                    {user.name || user.email}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: '"IBM Plex Mono", monospace',
+                      fontSize: '11px',
+                      color: '#6B6A62',
+                      textTransform: 'uppercase',
+                      mt: 0.5
+                    }}
+                  >
+                    {user.role} · ID {displayId}
+                    {bypass ? ' · BYPASS' : ''}
+                  </Typography>
+                </Box>
+              </Stack>
+              
               {!bypass && (
                 <Button
-                  color="inherit"
                   variant="outlined"
-                  startIcon={<LogoutRoundedIcon />}
+                  startIcon={<LogoutRoundedIcon sx={{ fontSize: '18px !important' }} />}
                   onClick={handleLogout}
-                  sx={{ borderColor: 'rgba(255,255,255,0.4)', '&:hover': { borderColor: '#fff' } }}
+                  sx={{
+                    borderColor: '#DDD8C9',
+                    color: '#6B6A62',
+                    fontFamily: '"Inter", sans-serif',
+                    textTransform: 'none',
+                    fontWeight: 500,
+                    px: 2,
+                    py: 0.75,
+                    '&:hover': {
+                      borderColor: '#16201C',
+                      bgcolor: 'transparent',
+                      color: '#16201C'
+                    }
+                  }}
                 >
                   Sign out
                 </Button>
