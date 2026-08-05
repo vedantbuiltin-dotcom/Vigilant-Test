@@ -46,9 +46,10 @@ const BulkImportDropzone = ({ onUpload, templateHref = '#', templateName = 'temp
   };
 
   const processFile = async (file) => {
-    // Only accept .csv and .xlsx
-    if (!file.name.endsWith('.csv') && !file.name.endsWith('.xlsx')) {
-      setSummary({ totalImported: 0, totalFailed: 1, errors: [{ row: 'File', reason: 'Invalid file type. Please upload a .csv or .xlsx file.' }] });
+    const ext = file.name.split('.').pop().toLowerCase();
+    const allowed = ['csv', 'xlsx', 'pdf', 'doc', 'docx'];
+    if (!allowed.includes(ext)) {
+      setSummary({ totalImported: 0, totalFailed: 1, errors: [{ row: 'File', reason: 'Invalid file type. Please upload a .csv, .xlsx, .pdf, or .docx file.' }] });
       return;
     }
 
@@ -99,7 +100,7 @@ const BulkImportDropzone = ({ onUpload, templateHref = '#', templateName = 'temp
           type="file"
           ref={fileInputRef}
           onChange={handleFileSelect}
-          accept=".csv, .xlsx"
+          accept=".csv, .xlsx, .pdf, .doc, .docx"
           style={{ display: 'none' }}
           disabled={isUploading}
         />
@@ -116,7 +117,7 @@ const BulkImportDropzone = ({ onUpload, templateHref = '#', templateName = 'temp
               Click or drag file to this area to upload
             </Typography>
             <Typography sx={{ fontSize: '13px', color: '#6B6A62' }}>
-              Support for a single .csv or .xlsx file upload.
+              Support for .csv, .xlsx, .pdf, or .docx file upload.
             </Typography>
           </Stack>
         )}

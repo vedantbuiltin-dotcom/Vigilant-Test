@@ -8,6 +8,8 @@ import {
   TextField,
   IconButton,
   Tooltip,
+  Select,
+  FormControl,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -243,15 +245,13 @@ const ExamManagement = () => {
         </Typography>
         <Button
           variant="contained"
+          color="primary"
           onClick={() => handleOpenDrawer()}
           sx={{
-            bgcolor: '#0F7A5C',
-            color: '#fff',
             fontFamily: '"Inter", sans-serif',
             textTransform: 'none',
             boxShadow: 'none',
             borderRadius: '2px',
-            '&:hover': { bgcolor: '#085041', boxShadow: 'none' },
           }}
         >
           + New exam
@@ -261,11 +261,12 @@ const ExamManagement = () => {
       <Box sx={{ bgcolor: '#FBFAF6', border: '1px solid #E3DFD4', borderRadius: '2px', mb: 4 }}>
         <Stack direction="row" spacing={2} sx={{ p: 2, borderBottom: '1px solid #E3DFD4' }}>
           <TextField
+            id="status-filter-field"
             select
             size="small"
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            sx={{ width: 150, '& .MuiOutlinedInput-root': { borderRadius: '2px', bgcolor: '#fff' } }}
+            sx={{ width: 150 }}
           >
             <MenuItem value="all">All statuses</MenuItem>
             <MenuItem value="draft">Draft</MenuItem>
@@ -274,11 +275,12 @@ const ExamManagement = () => {
           </TextField>
           
           <TextField
+            id="subject-filter-field"
             select
             size="small"
             value={subjectFilter}
             onChange={(e) => setSubjectFilter(e.target.value)}
-            sx={{ width: 150, '& .MuiOutlinedInput-root': { borderRadius: '2px', bgcolor: '#fff' } }}
+            sx={{ width: 150 }}
           >
             <MenuItem value="all">All subjects</MenuItem>
             <MenuItem value="web dev">Web dev</MenuItem>

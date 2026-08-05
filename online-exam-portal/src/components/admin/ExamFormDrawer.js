@@ -11,7 +11,12 @@ import {
   FormControlLabel,
   Switch,
   Alert,
+  FormControl,
+  InputLabel,
+  Select,
 } from '@mui/material';
+import QuestionSelectorDialog from './QuestionSelectorDialog';
+import { rosterApi } from '../../api/rosterApi';
 
 const initialFormState = {
   title: '',
@@ -42,6 +47,8 @@ const SectionDivider = ({ label }) => (
 
 const ExamFormDrawer = ({ open, onClose, onSave, exam = null, isLive = false }) => {
   const [form, setForm] = useState(initialFormState);
+  const [selectorOpen, setSelectorOpen] = useState(false);
+  const [availableBatches, setAvailableBatches] = useState([]);
 
   useEffect(() => {
     if (exam) {
@@ -50,6 +57,12 @@ const ExamFormDrawer = ({ open, onClose, onSave, exam = null, isLive = false }) 
       setForm(initialFormState);
     }
   }, [exam, open]);
+
+  useEffect(() => {
+    if (open) {
+      rosterApi.listBatches().then(setAvailableBatches).catch(console.error);
+    }
+  }, [open]);
 
   const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -194,7 +207,7 @@ const ExamFormDrawer = ({ open, onClose, onSave, exam = null, isLive = false }) 
               <Typography sx={{ color: '#6B6A62', fontSize: '13px', mb: 1 }}>
                 Search and select specific questions from the bank.
               </Typography>
-              <Button disabled={isLive} variant="outlined" size="small" sx={{ borderColor: '#E3DFD4', color: '#16201C', textTransform: 'none' }}>
+              <Button disabled={isLive} onClick={() => setSelectorOpen(true)} variant="outlined" size="small" sx={{ borderColor: '#E3DFD4', color: '#16201C', textTransform: 'none' }}>
                 Select Questions
               </Button>
               <Typography sx={{ mt: 1, fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: '#0F7A5C' }}>
@@ -204,6 +217,7 @@ const ExamFormDrawer = ({ open, onClose, onSave, exam = null, isLive = false }) 
           ) : (
             <Stack spacing={2.5} sx={{ p: 2, bgcolor: '#F6F4EF', border: '1px solid #E3DFD4', borderRadius: '2px' }}>
               <TextField
+                id="topic-filter-field"
                 select
                 fullWidth
                 label="Topic Filter"
@@ -212,7 +226,6 @@ const ExamFormDrawer = ({ open, onClose, onSave, exam = null, isLive = false }) 
                 onChange={handlePoolChange}
                 disabled={isLive}
                 size="small"
-                sx={{ '& .MuiOutlinedInput-root': { borderRadius: '2px', bgcolor: '#fff' } }}
               >
                 <MenuItem value="">Any Topic</MenuItem>
                 <MenuItem value="javascript">JavaScript</MenuItem>
@@ -220,6 +233,7 @@ const ExamFormDrawer = ({ open, onClose, onSave, exam = null, isLive = false }) 
                 <MenuItem value="databases">Databases</MenuItem>
               </TextField>
               <TextField
+                id="difficulty-filter-field"
                 select
                 fullWidth
                 label="Difficulty"
@@ -228,7 +242,6 @@ const ExamFormDrawer = ({ open, onClose, onSave, exam = null, isLive = false }) 
                 onChange={handlePoolChange}
                 disabled={isLive}
                 size="small"
-                sx={{ '& .MuiOutlinedInput-root': { borderRadius: '2px', bgcolor: '#fff' } }}
               >
                 <MenuItem value="easy">Easy</MenuItem>
                 <MenuItem value="medium">Medium</MenuItem>
@@ -243,7 +256,7 @@ const ExamFormDrawer = ({ open, onClose, onSave, exam = null, isLive = false }) 
                 onChange={handlePoolChange}
                 disabled={isLive}
                 size="small"
-                sx={{ '& .MuiOutlinedInput-root': { borderRadius: '2px', bgcolor: '#fff' } }}
+                sx={{ '& .MuiOutlinedInput-root': { borderRadius: '2px' } }}
               />
               <Typography sx={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: '#6B6A62' }}>
                 150 questions available in bank matching criteria
@@ -252,13 +265,36 @@ const ExamFormDrawer = ({ open, onClose, onSave, exam = null, isLive = false }) 
           )}
 
           <SectionDivider label="Batches" />
-          <Box sx={{ p: 2, bgcolor: '#F6F4EF', border: '1px solid #E3DFD4', borderRadius: '2px', mb: 4 }}>
-             <Typography sx={{ color: '#6B6A62', fontSize: '13px', mb: 1 }}>
-                Assign this exam to student batches.
-              </Typography>
-              <Button variant="outlined" size="small" sx={{ borderColor: '#E3DFD4', color: '#16201C', textTransform: 'none' }}>
-                Manage Batches
-              </Button>
+          <Box sx={{ mb: 4 }}>
+            <FormControl fullWidth size="small">
+              <InputLabel id="exam-batches-label">Assigned Batches</InputLabel>
+              <Select
+                labelId="exam-batches-label"
+                multiple
+                value={form.batches || []}
+                onChange={(e) => setForm({ ...form, batches: e.target.value })}
+                label="Assigned Batches"
+                renderValue={(selected) => (
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                    {selected.map((value) => {
+                      const batch = availableBatches.find(b => b.id === value);
+                      return (
+                        <Box key={value} sx={{ bgcolor: '#E3DFD4', px: 1, py: 0.25, borderRadius: '2px', fontSize: '12px' }}>
+                          {batch ? batch.name : value}
+                        </Box>
+                      );
+                    })}
+                  </Box>
+                )}
+                sx={{ '& .MuiOutlinedInput-notchedOutline': { borderRadius: '2px' } }}
+              >
+                {availableBatches.map((batch) => (
+                  <MenuItem key={batch.id} value={batch.id}>
+                    {batch.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Box>
         </Box>
 
@@ -284,6 +320,15 @@ const ExamFormDrawer = ({ open, onClose, onSave, exam = null, isLive = false }) 
           </Stack>
         </Box>
       </Box>
+      <QuestionSelectorDialog
+        open={selectorOpen}
+        onClose={() => setSelectorOpen(false)}
+        initialSelection={form.fixedQuestions}
+        onConfirm={(selection) => {
+          setForm(prev => ({ ...prev, fixedQuestions: selection }));
+          setSelectorOpen(false);
+        }}
+      />
     </Drawer>
   );
 };

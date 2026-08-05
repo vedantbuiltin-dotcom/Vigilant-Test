@@ -3,7 +3,7 @@
 const env = require('../config/env');
 const logger = require('../config/logger');
 
-const SUPPORTED = ['memory', 'postgres', 'mssql'];
+const SUPPORTED = ['memory', 'postgres', 'mssql', 'mongodb'];
 
 const loadDriver = (driver) => {
   if (!SUPPORTED.includes(driver)) {

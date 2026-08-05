@@ -11,6 +11,8 @@ const closeDriver = async () => {
       await require('./src/repositories/postgres/client').close();
     } else if (env.repositoryDriver === 'mssql') {
       await require('./src/repositories/mssql/client').close();
+    } else if (env.repositoryDriver === 'mongodb') {
+      await require('./src/repositories/mongodb/client').close();
     }
   } catch (err) {
     logger.error('Error closing DB pool:', err);

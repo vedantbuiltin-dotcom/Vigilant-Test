@@ -12,15 +12,17 @@ const validateOptions = (options, correctAnswerIndex) => {
 };
 
 const addQuestion = async (data) => {
-  const exam = await examRepository.findById(data.examId);
-  if (!exam) throw ApiError.notFound('Exam not found');
+  if (data.examId) {
+    const exam = await examRepository.findById(data.examId);
+    if (!exam) throw ApiError.notFound('Exam not found');
+  }
   if (data.options && data.correctAnswerIndex !== undefined) {
     validateOptions(data.options, data.correctAnswerIndex);
   }
 
   const question = {
     id: uuidv4(),
-    examId: data.examId,
+    examId: data.examId || null,
     question: data.question,
     options: data.options || [],
     correctAnswerIndex: data.correctAnswerIndex ?? 0,
@@ -34,8 +36,10 @@ const addQuestion = async (data) => {
 };
 
 const addBulkQuestions = async (examId, questionsData) => {
-  const exam = await examRepository.findById(examId);
-  if (!exam) throw ApiError.notFound('Exam not found');
+  if (examId) {
+    const exam = await examRepository.findById(examId);
+    if (!exam) throw ApiError.notFound('Exam not found');
+  }
   
   const created = [];
   for (const data of questionsData) {
@@ -44,7 +48,7 @@ const addBulkQuestions = async (examId, questionsData) => {
     }
     const question = {
       id: uuidv4(),
-      examId,
+      examId: examId || null,
       question: data.question,
       options: data.options || [],
       correctAnswerIndex: data.correctAnswerIndex ?? 0,
@@ -68,6 +72,34 @@ const getQuestionById = async (id) => {
 
 const getQuestionsByExam = async (examId) => questionRepository.findByExam(examId);
 
+const getAllQuestions = async (filters = {}) => {
+  let qs = await questionRepository.listAll();
+  if (filters.topic && filters.topic !== 'all') {
+    qs = qs.filter(q => q.topic === filters.topic || (q.tags && q.tags.includes(filters.topic)));
+  }
+  if (filters.difficulty && filters.difficulty !== 'all') {
+    qs = qs.filter(q => q.difficulty === filters.difficulty);
+  }
+  if (filters.type && filters.type !== 'all') {
+    qs = qs.filter(q => q.type === filters.type);
+  }
+  if (filters.search) {
+    const search = filters.search.toLowerCase();
+    qs = qs.filter(q => q.question.toLowerCase().includes(search));
+  }
+  return qs;
+};
+
+const getTopics = async () => {
+  const qs = await questionRepository.listAll();
+  const topics = new Set();
+  qs.forEach(q => {
+    if (q.topic) topics.add(q.topic);
+    if (q.tags) q.tags.forEach(t => topics.add(t));
+  });
+  return Array.from(topics);
+};
+
 const updateQuestion = async (id, data) => {
   const existing = await questionRepository.findById(id);
   if (!existing) throw ApiError.notFound('Question not found');
@@ -90,6 +122,8 @@ module.exports = {
   addBulkQuestions,
   getQuestionById,
   getQuestionsByExam,
+  getAllQuestions,
+  getTopics,
   updateQuestion,
   deleteQuestion,
 };

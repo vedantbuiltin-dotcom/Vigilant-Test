@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Popover, Box, Typography, TextField, MenuItem, Button, Stack } from '@mui/material';
+import { Popover, Box, Typography, TextField, MenuItem, Button, Stack, Select, FormControl } from '@mui/material';
 
 const BatchReassignPopover = ({ anchorEl, onClose, onApply, currentBatchId, batches }) => {
   const [selectedBatchId, setSelectedBatchId] = useState(currentBatchId || '');
@@ -42,16 +42,19 @@ const BatchReassignPopover = ({ anchorEl, onClose, onApply, currentBatchId, batc
       
       <Stack spacing={2}>
         <TextField
+          id="reassign-batch-field"
           select
-          size="small"
-          fullWidth
+          label="Select Batch"
           value={selectedBatchId}
           onChange={(e) => setSelectedBatchId(e.target.value)}
-          sx={{ '& .MuiOutlinedInput-root': { bgcolor: '#fff' } }}
+          fullWidth
+          size="small"
         >
           <MenuItem value=""><em>None</em></MenuItem>
           {batches.map(b => (
-            <MenuItem key={b.id} value={b.id}>{b.name}</MenuItem>
+            <MenuItem key={b.id} value={b.id}>
+              {b.name}
+            </MenuItem>
           ))}
         </TextField>
 
@@ -61,15 +64,10 @@ const BatchReassignPopover = ({ anchorEl, onClose, onApply, currentBatchId, batc
           </Button>
           <Button 
             size="small" 
-            variant="contained" 
+            variant="contained"
+            color="primary"
             onClick={handleApply}
-            sx={{
-              bgcolor: '#0F7A5C',
-              color: '#fff',
-              boxShadow: 'none',
-              textTransform: 'none',
-              '&:hover': { bgcolor: '#085041', boxShadow: 'none' }
-            }}
+            sx={{ textTransform: 'none' }}
           >
             Apply
           </Button>

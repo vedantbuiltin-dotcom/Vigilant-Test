@@ -1,4 +1,4 @@
-import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, Avatar, Stack } from '@mui/material';
+import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, Avatar, Stack, IconButton, Tooltip } from '@mui/material';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
@@ -8,6 +8,7 @@ import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import MonitorHeartOutlinedIcon from '@mui/icons-material/MonitorHeartOutlined';
 import AssessmentOutlinedIcon from '@mui/icons-material/AssessmentOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
 const drawerWidth = 200;
 
@@ -24,7 +25,7 @@ const menuItems = [
 const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   const initials = (user?.name || user?.email || 'A')
     .split(/\s+/)
@@ -134,6 +135,11 @@ const AdminLayout = () => {
             <Avatar sx={{ bgcolor: '#FAEEDA', color: '#633806', fontSize: 13, fontWeight: 600, width: 36, height: 36 }}>
               {initials}
             </Avatar>
+            <Tooltip title="Logout">
+              <IconButton onClick={() => { logout(); navigate('/login'); }} size="small" sx={{ ml: 0.5 }}>
+                <LogoutOutlinedIcon fontSize="small" sx={{ color: '#6B6A62' }} />
+              </IconButton>
+            </Tooltip>
           </Stack>
         </Box>
         <Box sx={{ p: 4, pt: 1, overflow: 'auto' }}>

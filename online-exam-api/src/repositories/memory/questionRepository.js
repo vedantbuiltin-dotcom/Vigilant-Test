@@ -4,6 +4,7 @@ const questions = new Map();
 
 const questionRepository = {
   findById: async (id) => questions.get(id) || null,
+  listAll: async () => Array.from(questions.values()),
   findByExam: async (examId) => Array.from(questions.values()).filter((q) => q.examId === examId),
   create: async (question) => {
     questions.set(question.id, question);

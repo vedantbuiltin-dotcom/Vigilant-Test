@@ -6,7 +6,7 @@ const requiredInProduction = ['JWT_SECRET'];
 
 const truthy = (val) => ['1', 'true', 'yes', 'on'].includes(String(val || '').toLowerCase());
 
-const SUPPORTED_DRIVERS = ['memory', 'postgres', 'mssql'];
+const SUPPORTED_DRIVERS = ['memory', 'postgres', 'mssql', 'mongodb'];
 const repositoryDriver = (process.env.REPOSITORY_DRIVER || 'memory').toLowerCase();
 if (!SUPPORTED_DRIVERS.includes(repositoryDriver)) {
   throw new Error(
@@ -41,6 +41,7 @@ const env = {
     trustServerCertificate: truthy(process.env.MSSQL_TRUST_SERVER_CERTIFICATE) || true,
     poolMax: parseInt(process.env.MSSQL_POOL_MAX, 10) || 10,
   },
+  mongodbUri: process.env.MONGODB_URI,
   corsOrigins: (process.env.CORS_ORIGIN || 'http://localhost:3000,http://localhost:3001')
     .split(',')
     .map((s) => s.trim())

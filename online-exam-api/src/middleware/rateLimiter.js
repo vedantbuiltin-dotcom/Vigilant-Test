@@ -10,7 +10,7 @@ const buildLimiter = (cfg, message) =>
     message: { success: false, error: { status: 429, message } },
     standardHeaders: true,
     legacyHeaders: false,
-    skip: () => env.isTest,
+    skip: () => env.isTest || env.nodeEnv === 'development',
   });
 
 const generalLimiter = buildLimiter(env.rateLimit.general, 'Too many requests, please try again later.');

@@ -23,6 +23,9 @@ const Roster = () => {
   const [search, setSearch] = useState('');
   const [batchFilter, setBatchFilter] = useState(''); // null/empty means all
 
+  // Selection
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
+
   // UI state
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
@@ -85,6 +88,18 @@ const Roster = () => {
       fetchData();
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    if (!window.confirm(`Are you sure you want to delete ${selectedRowIds.length} student(s)?`)) return;
+    try {
+      await Promise.all(selectedRowIds.map(id => rosterApi.removeStudent(id)));
+      setSelectedRowIds([]);
+      fetchData();
+    } catch (err) {
+      console.error(err);
+      alert('Failed to delete some students');
     }
   };
 
@@ -239,6 +254,17 @@ const Roster = () => {
               />
             </Stack>
             <Stack direction="row" spacing={2}>
+              {selectedRowIds.length > 0 && (
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={handleBulkDelete}
+                  startIcon={<DeleteOutlineOutlinedIcon />}
+                  sx={{ textTransform: 'none', borderRadius: '2px', fontFamily: '"Inter", sans-serif' }}
+                >
+                  Delete Selected ({selectedRowIds.length})
+                </Button>
+              )}
               <Button
                 variant="outlined"
                 onClick={() => setBulkImportOpen(true)}
@@ -256,15 +282,13 @@ const Roster = () => {
               </Button>
               <Button
                 variant="contained"
+                color="primary"
                 onClick={() => handleOpenDrawer()}
                 sx={{
-                  bgcolor: '#0F7A5C',
-                  color: '#fff',
                   fontFamily: '"Inter", sans-serif',
                   textTransform: 'none',
                   boxShadow: 'none',
                   borderRadius: '2px',
-                  '&:hover': { bgcolor: '#085041', boxShadow: 'none' },
                 }}
               >
                 + Add student
@@ -278,6 +302,9 @@ const Roster = () => {
                 rows={filteredStudents}
                 columns={columns}
                 loading={loading}
+                checkboxSelection
+                onRowSelectionModelChange={(newSelection) => setSelectedRowIds(newSelection)}
+                rowSelectionModel={selectedRowIds}
                 disableRowSelectionOnClick
                 hideFooter
                 sx={{

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Drawer, Box, Typography, Stack, Button, TextField, MenuItem, IconButton } from '@mui/material';
+import { Drawer, Box, Typography, Stack, Button, TextField, MenuItem, IconButton, FormControl, InputLabel, Select } from '@mui/material';
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 const StudentFormDrawer = ({ open, onClose, onSave, student = null, batches = [] }) => {
@@ -53,7 +53,6 @@ const StudentFormDrawer = ({ open, onClose, onSave, student = null, batches = []
               onChange={(e) => setFullName(e.target.value)}
               fullWidth
               size="small"
-              sx={{ '& .MuiOutlinedInput-root': { bgcolor: '#fff' } }}
             />
             
             <TextField
@@ -63,17 +62,16 @@ const StudentFormDrawer = ({ open, onClose, onSave, student = null, batches = []
               onChange={(e) => setEmail(e.target.value)}
               fullWidth
               size="small"
-              sx={{ '& .MuiOutlinedInput-root': { bgcolor: '#fff' } }}
             />
 
             <TextField
+              id="assign-batch-field"
               select
               label="Assign to Batch (Optional)"
               value={batchId}
               onChange={(e) => setBatchId(e.target.value)}
               fullWidth
               size="small"
-              sx={{ '& .MuiOutlinedInput-root': { bgcolor: '#fff' } }}
             >
               <MenuItem value=""><em>None</em></MenuItem>
               {batches.map(b => (
@@ -87,14 +85,9 @@ const StudentFormDrawer = ({ open, onClose, onSave, student = null, batches = []
           <Button onClick={onClose} sx={{ color: '#6B6A62' }}>Cancel</Button>
           <Button 
             variant="contained" 
+            color="primary"
             onClick={handleSave}
             disabled={!isFormValid()}
-            sx={{
-              bgcolor: '#0F7A5C',
-              color: '#fff',
-              boxShadow: 'none',
-              '&:hover': { bgcolor: '#085041', boxShadow: 'none' }
-            }}
           >
             Save
           </Button>

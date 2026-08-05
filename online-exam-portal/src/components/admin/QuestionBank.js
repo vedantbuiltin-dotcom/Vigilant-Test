@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Box, Typography, Button, Stack, TextField, MenuItem, IconButton, Tooltip, Dialog, DialogTitle, DialogContent, DialogActions
+  Box, Typography, Button, Stack, TextField, MenuItem, IconButton, Tooltip, Dialog, DialogTitle, DialogContent, DialogActions, Select, FormControl
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -41,6 +41,9 @@ const QuestionBank = () => {
 
   // Bulk Import Modal
   const [bulkImportOpen, setBulkImportOpen] = useState(false);
+
+  // Selection
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -103,6 +106,18 @@ const QuestionBank = () => {
       fetchData();
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    if (!window.confirm(`Are you sure you want to delete ${selectedRowIds.length} question(s)?`)) return;
+    try {
+      await Promise.all(selectedRowIds.map(id => questionApi.remove(id)));
+      setSelectedRowIds([]);
+      fetchData();
+    } catch (err) {
+      console.error(err);
+      alert('Failed to delete some questions');
     }
   };
 
@@ -208,6 +223,17 @@ const QuestionBank = () => {
           Question bank
         </Typography>
         <Stack direction="row" spacing={2}>
+          {selectedRowIds.length > 0 && (
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={handleBulkDelete}
+              startIcon={<DeleteOutlineOutlinedIcon />}
+              sx={{ textTransform: 'none', borderRadius: '2px', fontFamily: '"Inter", sans-serif' }}
+            >
+              Delete Selected ({selectedRowIds.length})
+            </Button>
+          )}
           <Button
             variant="outlined"
             onClick={() => setBulkImportOpen(true)}
@@ -225,15 +251,13 @@ const QuestionBank = () => {
           </Button>
           <Button
             variant="contained"
+            color="primary"
             onClick={() => handleOpenDrawer()}
             sx={{
-              bgcolor: '#0F7A5C',
-              color: '#fff',
               fontFamily: '"Inter", sans-serif',
               textTransform: 'none',
               boxShadow: 'none',
               borderRadius: '2px',
-              '&:hover': { bgcolor: '#085041', boxShadow: 'none' },
             }}
           >
             + Add question
@@ -244,37 +268,38 @@ const QuestionBank = () => {
       <Box sx={{ bgcolor: '#FBFAF6', border: '1px solid #E3DFD4', borderRadius: '2px', mb: 4 }}>
         <Stack direction="row" spacing={2} sx={{ p: 2, borderBottom: '1px solid #E3DFD4' }}>
           <TextField
+            id="topic-filter-field"
             select
             size="small"
             value={topicFilter}
             onChange={(e) => setTopicFilter(e.target.value)}
-            sx={{ minWidth: 150, '& .MuiOutlinedInput-root': { borderRadius: '2px', bgcolor: '#fff' } }}
+            sx={{ width: 150 }}
           >
             <MenuItem value="all">All topics</MenuItem>
-            {topics.map(t => (
-              <MenuItem key={t} value={t}>{t}</MenuItem>
-            ))}
+            {topics.map(t => <MenuItem key={t} value={t}>{t}</MenuItem>)}
           </TextField>
-
+          
           <TextField
+            id="difficulty-filter-field"
             select
             size="small"
             value={difficultyFilter}
             onChange={(e) => setDifficultyFilter(e.target.value)}
-            sx={{ minWidth: 150, '& .MuiOutlinedInput-root': { borderRadius: '2px', bgcolor: '#fff' } }}
+            sx={{ width: 150 }}
           >
             <MenuItem value="all">All difficulty</MenuItem>
             <MenuItem value="easy">Easy</MenuItem>
             <MenuItem value="medium">Medium</MenuItem>
             <MenuItem value="hard">Hard</MenuItem>
           </TextField>
-
+          
           <TextField
+            id="type-filter-field"
             select
             size="small"
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            sx={{ minWidth: 150, '& .MuiOutlinedInput-root': { borderRadius: '2px', bgcolor: '#fff' } }}
+            sx={{ width: 150 }}
           >
             <MenuItem value="all">All types</MenuItem>
             <MenuItem value="mcq">MCQ</MenuItem>
@@ -303,6 +328,9 @@ const QuestionBank = () => {
             rows={filteredQuestions}
             columns={columns}
             loading={loading}
+            checkboxSelection
+            onRowSelectionModelChange={(newSelection) => setSelectedRowIds(newSelection)}
+            rowSelectionModel={selectedRowIds}
             disableRowSelectionOnClick
             hideFooter
             sx={{

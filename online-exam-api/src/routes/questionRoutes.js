@@ -12,6 +12,9 @@ const router = Router();
 
 router.use(authenticate);
 
+router.get('/', requireAdmin, asyncHandler(questionController.listAll));
+router.get('/topics', requireAdmin, asyncHandler(questionController.getTopics));
+
 router.get('/exam/:examId', examIdParam(), validate, asyncHandler(questionController.list));
 router.get('/:id', idParam(), validate, asyncHandler(questionController.getOne));
 

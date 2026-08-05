@@ -11,6 +11,16 @@ const list = async (req, res) => {
   res.json({ success: true, questions: safe });
 };
 
+const listAll = async (req, res) => {
+  const questions = await questionService.getAllQuestions(req.query);
+  res.json({ success: true, questions });
+};
+
+const getTopics = async (req, res) => {
+  const topics = await questionService.getTopics();
+  res.json({ success: true, topics });
+};
+
 const getOne = async (req, res) => {
   const question = await questionService.getQuestionById(req.params.id);
   if (req.user?.role !== 'admin') {
@@ -28,8 +38,8 @@ const create = async (req, res) => {
 
 const bulkCreate = async (req, res) => {
   const { examId, questions } = req.body;
-  if (!examId || !Array.isArray(questions)) {
-    return res.status(400).json({ success: false, message: 'Invalid bulk data' });
+  if (!Array.isArray(questions)) {
+    return res.status(400).json({ success: false, message: 'Invalid bulk data: questions must be an array' });
   }
   const created = await questionService.addBulkQuestions(examId, questions);
   res.status(201).json({ success: true, count: created.length, questions: created });
@@ -45,4 +55,4 @@ const remove = async (req, res) => {
   res.json({ success: true, message: 'Question deleted' });
 };
 
-module.exports = { list, getOne, create, bulkCreate, update, remove };
+module.exports = { list, listAll, getTopics, getOne, create, bulkCreate, update, remove };

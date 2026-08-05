@@ -146,15 +146,13 @@ const BatchesSidebar = ({ batches, onRefresh }) => {
         />
         <Button
           variant="contained"
+          color="primary"
           onClick={handleAddBatch}
           disabled={!newBatchName.trim() || isAdding}
           sx={{
-            bgcolor: '#0F7A5C',
-            color: '#fff',
             minWidth: 'auto',
             px: 2,
             boxShadow: 'none',
-            '&:hover': { bgcolor: '#085041', boxShadow: 'none' }
           }}
         >
           Add
