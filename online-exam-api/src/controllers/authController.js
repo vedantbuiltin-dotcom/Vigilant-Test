@@ -2,8 +2,23 @@
 
 const authService = require('../services/authService');
 
+const env = require('../config/env');
+
 const register = async (req, res) => {
   const user = await authService.register(req.body);
+  
+  if (env.repositoryDriver === 'memory') {
+    const store = require('../repositories/memory/store');
+    store.state.students.push({
+      id: user.id,
+      fullName: user.name,
+      email: user.email,
+      batchName: 'Unassigned',
+      password: req.body.password
+    });
+    store.save();
+  }
+
   res.status(201).json({ success: true, user });
 };
 
