@@ -75,7 +75,8 @@ export const rosterApi = {
             const parsed = results.data.map(row => ({
               fullName: row.fullName || row.FullName || row.name || row.Name || row['STUDENT NAME'] || '',
               email: row.email || row.Email || row['EMAIL ADDRESS'] || '',
-              batchName: row.batchName || row.BatchName || row.batch || row.Batch || row['BATCH'] || 'Unassigned'
+              batchName: row.batchName || row.BatchName || row.batch || row.Batch || row['BATCH'] || 'Unassigned',
+              password: row.password || row.Password || row['PASSWORD'] || Math.random().toString(36).slice(-8)
             })).filter(s => s.email);
             resolve(parsed);
           },

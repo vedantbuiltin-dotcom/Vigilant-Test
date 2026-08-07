@@ -16,12 +16,22 @@ export function parseTextToStudents(text) {
       preEmail = preEmail.replace(/^[\d\.\)]+\s*/, '').trim();
       
       const fullName = preEmail || 'Unknown Name';
-      const batchName = postEmail || 'Unassigned';
+      
+      const postEmailWords = postEmail.split(/\s+/).filter(Boolean);
+      let password = '';
+      let batchName = 'Unassigned';
+      if (postEmailWords.length > 1) {
+        password = postEmailWords.shift();
+        batchName = postEmailWords.join(' ');
+      } else if (postEmailWords.length === 1) {
+        password = postEmailWords[0];
+      }
       
       students.push({
         fullName,
         email,
-        batchName
+        batchName,
+        password
       });
     }
   }

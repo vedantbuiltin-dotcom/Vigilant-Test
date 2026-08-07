@@ -1,6 +1,7 @@
 'use strict';
 
 const examService = require('../services/examService');
+const authService = require('../services/authService');
 const repositories = require('../repositories');
 const env = require('../config/env');
 const socketHandler = require('../socketHandler');
@@ -83,8 +84,20 @@ const getBatches = () => store ? store.state.batches : fallbackBatches;
 const saveStore = () => { if (store) store.save(); };
 
 const listStudents = (req, res) => res.json({ success: true, students: getStudents() });
-const createStudent = (req, res) => {
-  const newStudent = { id: Date.now().toString(), ...req.body };
+const createStudent = async (req, res) => {
+  const password = req.body.password || Math.random().toString(36).slice(-8);
+  let user;
+  try {
+    user = await authService.register({
+      email: req.body.email,
+      name: req.body.fullName || req.body.name || 'Unknown',
+      password
+    });
+  } catch (err) {
+    return res.status(400).json({ success: false, message: err.message });
+  }
+
+  const newStudent = { id: user.id, password, ...req.body };
   if (req.body.batchId) {
     const b = getBatches().find(b => b.id === req.body.batchId);
     if (b) newStudent.batchName = b.name;
@@ -108,12 +121,18 @@ const updateStudent = (req, res) => {
     res.status(404).json({ success: false });
   }
 };
-const removeStudent = (req, res) => {
+const removeStudent = async (req, res) => {
   const students = getStudents();
   const index = students.findIndex(s => s.id === req.params.id);
   if (index !== -1) {
+    const student = students[index];
     students.splice(index, 1);
     saveStore();
+    
+    const user = await repositories.users.findByEmail(student.email.toLowerCase().trim());
+    if (user) {
+      await repositories.users.delete(user.id);
+    }
   }
   res.json({ success: true });
 };
@@ -130,11 +149,19 @@ const reassignBatch = (req, res) => {
     res.status(404).json({ success: false });
   }
 };
-const bulkImportStudents = (req, res) => {
+const bulkImportStudents = async (req, res) => {
   if (req.body && req.body.students && Array.isArray(req.body.students)) {
     const imported = [];
     const batches = getBatches();
     const students = getStudents();
+    
+    const usersToCreate = req.body.students.map(s => ({
+      email: s.email,
+      name: s.fullName,
+      password: s.password,
+      role: 'student'
+    }));
+    await authService.bulkRegister(usersToCreate);
     
     for (const s of req.body.students) {
       // Find or create batch
@@ -145,14 +172,25 @@ const bulkImportStudents = (req, res) => {
         batches.push(batch);
       }
       
+      const user = await repositories.users.findByEmail(s.email.toLowerCase().trim());
+      const studentId = user ? user.id : 's' + Date.now().toString() + Math.floor(Math.random() * 1000);
+      
+      const existingStudentIdx = students.findIndex(st => st.email.toLowerCase() === s.email.toLowerCase());
+
       const newStudent = {
-        id: 's' + Date.now().toString() + Math.floor(Math.random() * 1000),
+        id: studentId,
         fullName: s.fullName,
         email: s.email,
         batchId: batch.id,
-        batchName: batch.name
+        batchName: batch.name,
+        password: s.password
       };
-      students.push(newStudent);
+      
+      if (existingStudentIdx !== -1) {
+        students[existingStudentIdx] = newStudent;
+      } else {
+        students.push(newStudent);
+      }
       imported.push(newStudent);
     }
     saveStore();

@@ -166,6 +166,17 @@ const Roster = () => {
       )
     },
     {
+      field: 'password',
+      headerName: 'PASSWORD',
+      flex: 1,
+      minWidth: 150,
+      renderCell: (params) => (
+        <Typography sx={{ color: '#16201C', fontSize: '14px', fontFamily: 'monospace' }}>
+          {params.value || 'N/A'}
+        </Typography>
+      )
+    },
+    {
       field: 'batch',
       headerName: 'BATCH',
       width: 140,

@@ -55,6 +55,276 @@
       "passwordHash": "$2a$10$tE8D6kCkrIaGcds2dnr1IOU8oxbx05p5.BwsHuyY03G8U1ulbaxSu",
       "role": "student",
       "createdAt": "2026-08-07T06:27:53.459Z"
+    },
+    {
+      "id": "4900082c-5dac-429c-b532-393af0cdd511",
+      "email": "aarav.sharma100@example.com",
+      "name": "Aarav Sharma",
+      "passwordHash": "$2a$10$9amzbGWe9OdNhyJX0rr1Y.ncy3eq08QjtINgajB3sG744BKReNQN6",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:23.807Z"
+    },
+    {
+      "id": "e2a87915-2ae0-42c7-8035-841082a3302b",
+      "email": "aditi.verma101@example.com",
+      "name": "Aditi Verma",
+      "passwordHash": "$2a$10$2mqkkH0O8lqKFgAnUDFQO.49/MCM3FmgmAKclmBk2UWkFfkAxrBg2",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:23.916Z"
+    },
+    {
+      "id": "77f45535-dd1a-4999-8af4-80fcc76baeea",
+      "email": "amit.patil102@example.com",
+      "name": "Amit Patil",
+      "passwordHash": "$2a$10$qaSjd3xP347.58SdFN8kM.pF.BUYPROrrNL.JIcCI2n.WYa2UWLNO",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:24.020Z"
+    },
+    {
+      "id": "8e219a65-b35d-4b66-880e-c58d0ae3aabe",
+      "email": "anjali.deshmukh103@example.com",
+      "name": "Anjali Deshmukh",
+      "passwordHash": "$2a$10$y0QoCiMY7Cz5R/Bi2XVmsOFMNiamRAsMEN8EL6FmT5glusHDOWINO",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:24.125Z"
+    },
+    {
+      "id": "47927a95-775f-4622-9ab3-265f74c2a144",
+      "email": "arjun.joshi104@example.com",
+      "name": "Arjun Joshi",
+      "passwordHash": "$2a$10$f/BtgzgW9jMt7OTUSmz9s.OrUPkPc73YFOSQLQ3YSKcyAykxP3mcC",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:24.231Z"
+    },
+    {
+      "id": "36f2661b-1c1a-4c61-8f2a-6c99ef9c2cab",
+      "email": "bhavna.kulkarni105@example.com",
+      "name": "Bhavna Kulkarni",
+      "passwordHash": "$2a$10$7vM9X1z8JwT1NNzDIhvjZubao2Yeod3QAfk1RVqylYl4EEpWDgXXC",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:24.335Z"
+    },
+    {
+      "id": "f0204a3f-5c72-4505-a69c-49747e7ba096",
+      "email": "chirag.desai106@example.com",
+      "name": "Chirag Desai",
+      "passwordHash": "$2a$10$IhxFWVweKzxt/1dnD1xUCuPRZrUy0FvShlWHybMW.K2g.GYsJYmfi",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:24.440Z"
+    },
+    {
+      "id": "83107d55-7b09-48d7-91fb-3b2f2886c63a",
+      "email": "deepak.singh107@example.com",
+      "name": "Deepak Singh",
+      "passwordHash": "$2a$10$YDK3b5qMqk3Ad6kM.lbrzem7s0.zHLxvPkCirfu3SvtA3SljsV2Vm",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:24.547Z"
+    },
+    {
+      "id": "07b8b5fd-a0bd-41e6-99d7-f5bfef04bdd8",
+      "email": "divya.yadav108@example.com",
+      "name": "Divya Yadav",
+      "passwordHash": "$2a$10$vHe5m6SiqcY0L54Z9GHlt.uPmePWO2YFjep8fpKmAG4/0X16ND96u",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:24.651Z"
+    },
+    {
+      "id": "9768d377-e621-4168-b1c5-5fd85f561644",
+      "email": "gaurav.gupta109@example.com",
+      "name": "Gaurav Gupta",
+      "passwordHash": "$2a$10$DKQDAzyCvXTdaUnAaUEiL.v0yc.gFNGiSIMc57O7j0UvvXOU6iMTm",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:24.756Z"
+    },
+    {
+      "id": "788ff9b0-9abe-4447-b1af-43245787f649",
+      "email": "isha.sharma110@example.com",
+      "name": "Isha Sharma",
+      "passwordHash": "$2a$10$StxhK7uBh7hCESZv8kjJkeQpWqurDeXXjOa/OlYRpksnGEqrviEIO",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:24.862Z"
+    },
+    {
+      "id": "fb220ca5-353a-4827-87bd-c00e8f08c110",
+      "email": "karan.verma111@example.com",
+      "name": "Karan Verma",
+      "passwordHash": "$2a$10$drxtCm9JK5EhLxtgt/RfGedrg/71lyWkF2HcrCPgG/XAuvaKdYq4q",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:24.968Z"
+    },
+    {
+      "id": "1b3d0ac8-48e3-42d5-b7f4-03c6ce688362",
+      "email": "kavita.patil112@example.com",
+      "name": "Kavita Patil",
+      "passwordHash": "$2a$10$3s2Y8k7oWVm0qkUmNDv6z.L2Gua9cBpFVt0upv3KgvXD/l923xSg2",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:25.075Z"
+    },
+    {
+      "id": "3f7fe695-4075-4da5-a6ba-36730bbcaf09",
+      "email": "kunal.deshmukh113@example.com",
+      "name": "Kunal Deshmukh",
+      "passwordHash": "$2a$10$l8Keyojh49L/bLu3SCV9d.huSU/.wyE2xuN22dcKdop5U4E0Cl1xi",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:25.180Z"
+    },
+    {
+      "id": "bf4ee107-8130-45fc-a449-18f0c7dc9dfb",
+      "email": "megha.joshi114@example.com",
+      "name": "Megha Joshi",
+      "passwordHash": "$2a$10$jgHsD5wEO/yx0g8AU08XseQmv06UPb1cEKgf7bPKiGIaKXLgEgyca",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:25.284Z"
+    },
+    {
+      "id": "ba7d7437-f9e7-48c1-9923-1f3f1579ba7f",
+      "email": "mohit.kulkarni115@example.com",
+      "name": "Mohit Kulkarni",
+      "passwordHash": "$2a$10$9SozZsMDY8kXW0plKJoS1eRQ35tfPwQCeASBoXaZy1P8KCkQ7NQfm",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:25.388Z"
+    },
+    {
+      "id": "396377b2-9211-4b12-b15d-013810fcdb41",
+      "email": "neha.desai116@example.com",
+      "name": "Neha Desai",
+      "passwordHash": "$2a$10$9P9jcyYMOTgyUQtba6Ie3e68WuYGLlqjDvER92zZuA.INe21OceTK",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:25.494Z"
+    },
+    {
+      "id": "59d9ba7a-bc04-41aa-bf7a-e628da4ac8d8",
+      "email": "nikhil.singh117@example.com",
+      "name": "Nikhil Singh",
+      "passwordHash": "$2a$10$EzKu20zMx2LWrModWGoAdutcyU8LXZmX7H1Jmts10v5d8q0NdTZo2",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:25.599Z"
+    },
+    {
+      "id": "245126c6-7a39-4ba5-ae19-7765c5c25188",
+      "email": "pooja.yadav118@example.com",
+      "name": "Pooja Yadav",
+      "passwordHash": "$2a$10$um0V61T/1JJjTgxe23pvh.le9deRYDRkpV4F6zSg4WTjatqsUYEgG",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:25.703Z"
+    },
+    {
+      "id": "eca8e39a-78c9-4fb4-9d67-36b221954e06",
+      "email": "pranav.gupta119@example.com",
+      "name": "Pranav Gupta",
+      "passwordHash": "$2a$10$oBAiYBLT6DKEAUHTadQPueu6fZrfz.oBfcTbk6kp.7lDi3qZ1gKr.",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:25.809Z"
+    },
+    {
+      "id": "34b3ec0f-671e-4d79-9c69-f4c3e2585de1",
+      "email": "priya.sharma120@example.com",
+      "name": "Priya Sharma",
+      "passwordHash": "$2a$10$e.F7xDMZaMlUbPHw.z2esOBqpTsbQ9hykR8TqBYL1Mv5sLvjPjE.O",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:25.914Z"
+    },
+    {
+      "id": "52df0cdc-f48b-4233-a599-d19e7da4aee2",
+      "email": "rahul.verma121@example.com",
+      "name": "Rahul Verma",
+      "passwordHash": "$2a$10$B0quCr.Sr/6MYz/nwdwR7.89r20/KjtbYwmNMSbCOuWpcXFQ7lWUC",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:26.020Z"
+    },
+    {
+      "id": "0ab804a7-c908-417b-be25-28aa2e654694",
+      "email": "riya.patil122@example.com",
+      "name": "Riya Patil",
+      "passwordHash": "$2a$10$jvmJ6/qmUlZZ58Soo3kp7eXmTwmnMCFZa5i5Pxs6QiK2Qp3M5rdxy",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:26.124Z"
+    },
+    {
+      "id": "7174918a-dd8b-4cb3-9834-bc3d0d00ee29",
+      "email": "rohan.deshmukh123@example.com",
+      "name": "Rohan Deshmukh",
+      "passwordHash": "$2a$10$Yx445hlYzRD7vxfxvPgckeE3I/wO4RsSdT5wCTN2zGDOker2noAJO",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:26.255Z"
+    },
+    {
+      "id": "0233e3e7-01bb-4b95-8a10-9824dd7a050f",
+      "email": "sakshi.joshi124@example.com",
+      "name": "Sakshi Joshi",
+      "passwordHash": "$2a$10$tXheZDHYG1ixV8KM1CkDS.pcFH2J.Zc.hIe0swNgtZQ6yZTFqSb86",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:26.359Z"
+    },
+    {
+      "id": "d325b62c-6fc5-4c0c-8cd7-8f7261c4e649",
+      "email": "sameer.kulkarni125@example.com",
+      "name": "Sameer Kulkarni",
+      "passwordHash": "$2a$10$18IhXSqW7XNIAGLY5y86NeCJU6jqWHwqa.KRgBiImfynBCkCABTgS",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:26.466Z"
+    },
+    {
+      "id": "0c7ad04f-86b2-4115-94d0-a795715099d7",
+      "email": "shreya.desai126@example.com",
+      "name": "Shreya Desai",
+      "passwordHash": "$2a$10$IA2caMnwaorcqrEO6u8ivOIHvfaCZhsZhRbSHOwsdAM.J9vC3kbd2",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:26.570Z"
+    },
+    {
+      "id": "a7a119a4-9f20-4b03-bde4-eba9aed3ddf0",
+      "email": "sneha.singh127@example.com",
+      "name": "Sneha Singh",
+      "passwordHash": "$2a$10$f.07.D.fGr4kkrp14fotMupdjCRxVz2CVeezVe/rGcgqUyOrbePAu",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:26.674Z"
+    },
+    {
+      "id": "1114d3e5-1d88-4c85-aa18-e0002b4bab53",
+      "email": "tarun.yadav128@example.com",
+      "name": "Tarun Yadav",
+      "passwordHash": "$2a$10$/W7h83jwVB8V4j3KTON3cO17GIFivxn4BgKiakdF661kCNv3Ciosi",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:26.781Z"
+    },
+    {
+      "id": "68e6630f-391a-4949-a44f-bae92c6c7671",
+      "email": "varun.gupta129@example.com",
+      "name": "Varun Gupta",
+      "passwordHash": "$2a$10$QFi5EYvTuYePj09iqQOrIexqXbyU7O4z.kGOGmYdF.xWmsvYW1yQS",
+      "role": "student",
+      "batches": [],
+      "createdAt": "2026-08-07T07:43:26.902Z"
     }
   ],
   "exams": [
@@ -838,10 +1108,380 @@
     {
       "id": "b1786001996105468",
       "name": "Morning"
+    },
+    {
+      "id": "b1786088606903194",
+      "name": "aarav5486"
+    },
+    {
+      "id": "b1786088606903267",
+      "name": "aditi4876"
+    },
+    {
+      "id": "b1786088606903589",
+      "name": "amit3151"
+    },
+    {
+      "id": "b1786088606903536",
+      "name": "anjali5579"
+    },
+    {
+      "id": "b1786088606903886",
+      "name": "arjun8279"
+    },
+    {
+      "id": "b1786088606903486",
+      "name": "bhavna4248"
+    },
+    {
+      "id": "b1786088606903953",
+      "name": "chirag7427"
+    },
+    {
+      "id": "b178608860690311",
+      "name": "deepak6571"
+    },
+    {
+      "id": "b1786088606903236",
+      "name": "divya2707"
+    },
+    {
+      "id": "b1786088606903558",
+      "name": "gaurav9613"
+    },
+    {
+      "id": "b1786088606903769",
+      "name": "isha1515"
+    },
+    {
+      "id": "b1786088606903566",
+      "name": "karan5123"
+    },
+    {
+      "id": "b1786088606903576",
+      "name": "kavita1033"
+    },
+    {
+      "id": "b178608860690332",
+      "name": "kunal1776"
+    },
+    {
+      "id": "b1786088606903196",
+      "name": "megha4139"
+    },
+    {
+      "id": "b1786088606903685",
+      "name": "mohit6391"
+    },
+    {
+      "id": "b1786088606903784",
+      "name": "neha3058"
+    },
+    {
+      "id": "b178608860690358",
+      "name": "nikhil5512"
+    },
+    {
+      "id": "b1786088606904492",
+      "name": "pooja1806"
+    },
+    {
+      "id": "b1786088606904156",
+      "name": "pranav3800"
+    },
+    {
+      "id": "b1786088606904882",
+      "name": "priya3804"
+    },
+    {
+      "id": "b1786088606904633",
+      "name": "rahul7064"
+    },
+    {
+      "id": "b1786088606904497",
+      "name": "riya6860"
+    },
+    {
+      "id": "b1786088606904931",
+      "name": "rohan9978"
+    },
+    {
+      "id": "b178608860690423",
+      "name": "sakshi7400"
+    },
+    {
+      "id": "b1786088606904864",
+      "name": "sameer5902"
+    },
+    {
+      "id": "b1786088606904839",
+      "name": "shreya2500"
+    },
+    {
+      "id": "b1786088606904701",
+      "name": "sneha7204"
+    },
+    {
+      "id": "b1786088606904627",
+      "name": "tarun2415"
+    },
+    {
+      "id": "b1786088606904391",
+      "name": "varun2056"
     }
   ],
-  "students": [],
+  "students": [
+    {
+      "id": "4900082c-5dac-429c-b532-393af0cdd511",
+      "fullName": "Aarav Sharma",
+      "email": "aarav.sharma100@example.com",
+      "batchId": "b1786088606903194",
+      "batchName": "aarav5486",
+      "password": "Evening"
+    },
+    {
+      "id": "e2a87915-2ae0-42c7-8035-841082a3302b",
+      "fullName": "Aditi Verma",
+      "email": "aditi.verma101@example.com",
+      "batchId": "b1786088606903267",
+      "batchName": "aditi4876",
+      "password": "Afternoon"
+    },
+    {
+      "id": "77f45535-dd1a-4999-8af4-80fcc76baeea",
+      "fullName": "Amit Patil",
+      "email": "amit.patil102@example.com",
+      "batchId": "b1786088606903589",
+      "batchName": "amit3151",
+      "password": "Evening"
+    },
+    {
+      "id": "8e219a65-b35d-4b66-880e-c58d0ae3aabe",
+      "fullName": "Anjali Deshmukh",
+      "email": "anjali.deshmukh103@example.com",
+      "batchId": "b1786088606903536",
+      "batchName": "anjali5579",
+      "password": "Morning"
+    },
+    {
+      "id": "47927a95-775f-4622-9ab3-265f74c2a144",
+      "fullName": "Arjun Joshi",
+      "email": "arjun.joshi104@example.com",
+      "batchId": "b1786088606903886",
+      "batchName": "arjun8279",
+      "password": "Afternoon"
+    },
+    {
+      "id": "36f2661b-1c1a-4c61-8f2a-6c99ef9c2cab",
+      "fullName": "Bhavna Kulkarni",
+      "email": "bhavna.kulkarni105@example.com",
+      "batchId": "b1786088606903486",
+      "batchName": "bhavna4248",
+      "password": "Evening"
+    },
+    {
+      "id": "f0204a3f-5c72-4505-a69c-49747e7ba096",
+      "fullName": "Chirag Desai",
+      "email": "chirag.desai106@example.com",
+      "batchId": "b1786088606903953",
+      "batchName": "chirag7427",
+      "password": "Evening"
+    },
+    {
+      "id": "83107d55-7b09-48d7-91fb-3b2f2886c63a",
+      "fullName": "Deepak Singh",
+      "email": "deepak.singh107@example.com",
+      "batchId": "b178608860690311",
+      "batchName": "deepak6571",
+      "password": "Evening"
+    },
+    {
+      "id": "07b8b5fd-a0bd-41e6-99d7-f5bfef04bdd8",
+      "fullName": "Divya Yadav",
+      "email": "divya.yadav108@example.com",
+      "batchId": "b1786088606903236",
+      "batchName": "divya2707",
+      "password": "Evening"
+    },
+    {
+      "id": "9768d377-e621-4168-b1c5-5fd85f561644",
+      "fullName": "Gaurav Gupta",
+      "email": "gaurav.gupta109@example.com",
+      "batchId": "b1786088606903558",
+      "batchName": "gaurav9613",
+      "password": "Afternoon"
+    },
+    {
+      "id": "788ff9b0-9abe-4447-b1af-43245787f649",
+      "fullName": "Isha Sharma",
+      "email": "isha.sharma110@example.com",
+      "batchId": "b1786088606903769",
+      "batchName": "isha1515",
+      "password": "Afternoon"
+    },
+    {
+      "id": "fb220ca5-353a-4827-87bd-c00e8f08c110",
+      "fullName": "Karan Verma",
+      "email": "karan.verma111@example.com",
+      "batchId": "b1786088606903566",
+      "batchName": "karan5123",
+      "password": "Afternoon"
+    },
+    {
+      "id": "1b3d0ac8-48e3-42d5-b7f4-03c6ce688362",
+      "fullName": "Kavita Patil",
+      "email": "kavita.patil112@example.com",
+      "batchId": "b1786088606903576",
+      "batchName": "kavita1033",
+      "password": "Morning"
+    },
+    {
+      "id": "3f7fe695-4075-4da5-a6ba-36730bbcaf09",
+      "fullName": "Kunal Deshmukh",
+      "email": "kunal.deshmukh113@example.com",
+      "batchId": "b178608860690332",
+      "batchName": "kunal1776",
+      "password": "Afternoon"
+    },
+    {
+      "id": "bf4ee107-8130-45fc-a449-18f0c7dc9dfb",
+      "fullName": "Megha Joshi",
+      "email": "megha.joshi114@example.com",
+      "batchId": "b1786088606903196",
+      "batchName": "megha4139",
+      "password": "Morning"
+    },
+    {
+      "id": "ba7d7437-f9e7-48c1-9923-1f3f1579ba7f",
+      "fullName": "Mohit Kulkarni",
+      "email": "mohit.kulkarni115@example.com",
+      "batchId": "b1786088606903685",
+      "batchName": "mohit6391",
+      "password": "Evening"
+    },
+    {
+      "id": "396377b2-9211-4b12-b15d-013810fcdb41",
+      "fullName": "Neha Desai",
+      "email": "neha.desai116@example.com",
+      "batchId": "b1786088606903784",
+      "batchName": "neha3058",
+      "password": "Afternoon"
+    },
+    {
+      "id": "59d9ba7a-bc04-41aa-bf7a-e628da4ac8d8",
+      "fullName": "Nikhil Singh",
+      "email": "nikhil.singh117@example.com",
+      "batchId": "b178608860690358",
+      "batchName": "nikhil5512",
+      "password": "Evening"
+    },
+    {
+      "id": "245126c6-7a39-4ba5-ae19-7765c5c25188",
+      "fullName": "Pooja Yadav",
+      "email": "pooja.yadav118@example.com",
+      "batchId": "b1786088606904492",
+      "batchName": "pooja1806",
+      "password": "Evening"
+    },
+    {
+      "id": "eca8e39a-78c9-4fb4-9d67-36b221954e06",
+      "fullName": "Pranav Gupta",
+      "email": "pranav.gupta119@example.com",
+      "batchId": "b1786088606904156",
+      "batchName": "pranav3800",
+      "password": "Evening"
+    },
+    {
+      "id": "34b3ec0f-671e-4d79-9c69-f4c3e2585de1",
+      "fullName": "Priya Sharma",
+      "email": "priya.sharma120@example.com",
+      "batchId": "b1786088606904882",
+      "batchName": "priya3804",
+      "password": "Evening"
+    },
+    {
+      "id": "52df0cdc-f48b-4233-a599-d19e7da4aee2",
+      "fullName": "Rahul Verma",
+      "email": "rahul.verma121@example.com",
+      "batchId": "b1786088606904633",
+      "batchName": "rahul7064",
+      "password": "Evening"
+    },
+    {
+      "id": "0ab804a7-c908-417b-be25-28aa2e654694",
+      "fullName": "Riya Patil",
+      "email": "riya.patil122@example.com",
+      "batchId": "b1786088606904497",
+      "batchName": "riya6860",
+      "password": "Evening"
+    },
+    {
+      "id": "7174918a-dd8b-4cb3-9834-bc3d0d00ee29",
+      "fullName": "Rohan Deshmukh",
+      "email": "rohan.deshmukh123@example.com",
+      "batchId": "b1786088606904931",
+      "batchName": "rohan9978",
+      "password": "Morning"
+    },
+    {
+      "id": "0233e3e7-01bb-4b95-8a10-9824dd7a050f",
+      "fullName": "Sakshi Joshi",
+      "email": "sakshi.joshi124@example.com",
+      "batchId": "b178608860690423",
+      "batchName": "sakshi7400",
+      "password": "Evening"
+    },
+    {
+      "id": "d325b62c-6fc5-4c0c-8cd7-8f7261c4e649",
+      "fullName": "Sameer Kulkarni",
+      "email": "sameer.kulkarni125@example.com",
+      "batchId": "b1786088606904864",
+      "batchName": "sameer5902",
+      "password": "Afternoon"
+    },
+    {
+      "id": "0c7ad04f-86b2-4115-94d0-a795715099d7",
+      "fullName": "Shreya Desai",
+      "email": "shreya.desai126@example.com",
+      "batchId": "b1786088606904839",
+      "batchName": "shreya2500",
+      "password": "Morning"
+    },
+    {
+      "id": "a7a119a4-9f20-4b03-bde4-eba9aed3ddf0",
+      "fullName": "Sneha Singh",
+      "email": "sneha.singh127@example.com",
+      "batchId": "b1786088606904701",
+      "batchName": "sneha7204",
+      "password": "Evening"
+    },
+    {
+      "id": "1114d3e5-1d88-4c85-aa18-e0002b4bab53",
+      "fullName": "Tarun Yadav",
+      "email": "tarun.yadav128@example.com",
+      "batchId": "b1786088606904627",
+      "batchName": "tarun2415",
+      "password": "Morning"
+    },
+    {
+      "id": "68e6630f-391a-4949-a44f-bae92c6c7671",
+      "fullName": "Varun Gupta",
+      "email": "varun.gupta129@example.com",
+      "batchId": "b1786088606904391",
+      "batchName": "varun2056",
+      "password": "Evening"
+    }
+  ],
   "auditLogs": [
+    {
+      "id": "2c5b6ac9-491c-472b-b5ee-0829428b1093",
+      "adminId": "8f3b3aa2-2c15-41a1-b3cf-288f60c26ad3",
+      "adminName": "Admin",
+      "actionType": "Imported students",
+      "targetName": "30 students imported",
+      "details": null,
+      "timestamp": "2026-08-07T07:43:26.905Z"
+    },
     {
       "id": "2a924fad-b1b1-4b01-bdb5-d587244c7ebd",
       "adminId": "8f3b3aa2-2c15-41a1-b3cf-288f60c26ad3",
