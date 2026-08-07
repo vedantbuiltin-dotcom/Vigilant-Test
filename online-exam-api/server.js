@@ -4,6 +4,8 @@ const env = require('./src/config/env');
 const logger = require('./src/config/logger');
 const buildApp = require('./src/app');
 const seed = require('./src/utils/seed');
+const socketHandler = require('./src/socketHandler');
+const examStatusWorker = require('./src/workers/examStatusWorker');
 
 const closeDriver = async () => {
   try {
@@ -29,6 +31,13 @@ const start = async () => {
   const server = app.listen(env.port, () => {
     logger.info(`Online Exam API running on port ${env.port}`);
     logger.info(`Environment: ${env.nodeEnv}`);
+    
+    // Initialize WebSockets
+    socketHandler.init(server);
+    
+    // Start Background Workers
+    examStatusWorker.start();
+    
     if (env.authBypass.enabled) {
       logger.warn('========================================================');
       logger.warn(' AUTH_BYPASS=true - all routes are open as a "bypass" user.');
@@ -40,6 +49,7 @@ const start = async () => {
   const shutdown = (signal) => {
     logger.info(`${signal} received, shutting down gracefully...`);
     server.close(async () => {
+      examStatusWorker.stop();
       await closeDriver();
       logger.info('Server closed.');
       process.exit(0);

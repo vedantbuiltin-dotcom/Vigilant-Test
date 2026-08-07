@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -8,9 +8,30 @@ import {
   Typography,
   Stack,
   Box,
+  CircularProgress
 } from '@mui/material';
+import { rosterApi } from '../../api/rosterApi';
 
 const PublishConfirmDialog = ({ open, onClose, onConfirm, exam }) => {
+  const [studentCount, setStudentCount] = useState(null);
+
+  React.useEffect(() => {
+    if (open && exam?.batches?.length > 0) {
+      setStudentCount(null);
+      rosterApi.listBatches().then(batches => {
+        const total = batches
+          .filter(b => exam.batches.some(eb => eb === b.id || eb.id === b.id))
+          .reduce((sum, b) => sum + (b.studentCount || 0), 0);
+        setStudentCount(total);
+      }).catch(err => {
+        console.error('Failed to fetch batches', err);
+        setStudentCount(0);
+      });
+    } else if (open) {
+      setStudentCount(0);
+    }
+  }, [open, exam]);
+
   if (!exam) return null;
 
   return (
@@ -35,6 +56,12 @@ const PublishConfirmDialog = ({ open, onClose, onConfirm, exam }) => {
           <Box sx={{ display: 'flex', justifyContent: 'space-between', pb: 1, borderBottom: '1px solid #E3DFD4' }}>
             <Typography variant="inherit" sx={{ color: '#6B6A62' }}>Assigned Batches:</Typography>
             <Typography variant="inherit" sx={{ fontWeight: 600 }}>{exam.batches?.length || 0}</Typography>
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', pb: 1, borderBottom: '1px solid #E3DFD4' }}>
+            <Typography variant="inherit" sx={{ color: '#6B6A62' }}>Total Students:</Typography>
+            <Typography variant="inherit" sx={{ fontWeight: 600 }}>
+              {studentCount === null ? <CircularProgress size={12} sx={{ color: '#16201C' }} /> : studentCount}
+            </Typography>
           </Box>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', pb: 1, borderBottom: '1px solid #E3DFD4' }}>
             <Typography variant="inherit" sx={{ color: '#6B6A62' }}>Exam Window:</Typography>

@@ -32,5 +32,5 @@ export const useCountdown = (initialSeconds, { intervalMs = 1000, onTick, onEnd 
     return () => clearInterval(id);
   }, [secondsLeft > 0, intervalMs]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return secondsLeft;
+  return [secondsLeft, setSecondsLeft];
 };

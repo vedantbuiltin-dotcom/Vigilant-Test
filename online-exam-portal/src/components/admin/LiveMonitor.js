@@ -15,6 +15,7 @@ import { monitorApi } from '../../api/monitorApi';
 import LiveCountdown from './LiveCountdown';
 import FlagTimeline from './FlagTimeline';
 import config from '../../config';
+import { useAuth } from '../../context/AuthContext';
 
 const pulseAnimation = keyframes`
   0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(201, 122, 26, 0.7); }
@@ -102,6 +103,7 @@ const Row = ({ row, onAction }) => {
 const LiveMonitor = () => {
   const { examId: routeExamId } = useParams();
   const navigate = useNavigate();
+  const { token } = useAuth();
 
   const [exams, setExams] = useState([]);
   const [selectedExamId, setSelectedExamId] = useState(routeExamId || '');
@@ -152,13 +154,22 @@ const LiveMonitor = () => {
     loadAttempts(selectedExamId);
 
     // 2. Setup Socket
-    const socket = io(config.apiBaseUrl, {
+    const baseUrl = config.apiBaseUrl.replace(/\/api$/, '');
+    const socket = io(baseUrl, {
       path: '/socket.io',
-      query: { examId: selectedExamId }
+      query: { examId: selectedExamId },
+      auth: { token }
     });
     socketRef.current = socket;
 
-    socket.on('connect', () => setSocketStatus('connected'));
+    socket.on('connect_error', (err) => {
+      console.error('[SOCKET ADMIN] Connection error:', err.message);
+    });
+
+    socket.on('connect', () => {
+      console.log(`[SOCKET ADMIN] Connected, querying exam ${selectedExamId}`);
+      setSocketStatus('connected');
+    });
     socket.on('disconnect', () => setSocketStatus('disconnected'));
     socket.on('reconnecting', () => setSocketStatus('reconnecting'));
 
@@ -195,7 +206,7 @@ const LiveMonitor = () => {
       socket.disconnect();
       clearInterval(pollTimerRef.current);
     };
-  }, [selectedExamId]);
+  }, [selectedExamId, token]);
 
   const handleExamChange = (e) => {
     const newId = e.target.value;

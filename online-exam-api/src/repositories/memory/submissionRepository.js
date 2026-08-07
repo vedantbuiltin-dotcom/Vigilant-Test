@@ -1,17 +1,21 @@
 'use strict';
 
-const submissions = new Map();
+const store = require('./store');
 
 const submissionRepository = {
-  findById: async (id) => submissions.get(id) || null,
-  findByUser: async (userId) => Array.from(submissions.values()).filter((s) => s.userId === userId),
+  findById: async (id) => store.state.submissions.find(s => s.id === id) || null,
+  findByUser: async (userId) => store.state.submissions.filter((s) => s.userId === userId),
   findByExamAndUser: async (examId, userId) =>
-    Array.from(submissions.values()).filter((s) => s.examId === examId && s.userId === userId),
+    store.state.submissions.filter((s) => s.examId === examId && s.userId === userId),
   create: async (submission) => {
-    submissions.set(submission.id, submission);
+    store.state.submissions.push(submission);
+    store.save();
     return submission;
   },
-  reset: () => submissions.clear(),
+  reset: () => {
+    store.state.submissions = [];
+    store.save();
+  },
 };
 
 module.exports = submissionRepository;

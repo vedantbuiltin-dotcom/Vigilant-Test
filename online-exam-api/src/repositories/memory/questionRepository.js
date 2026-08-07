@@ -1,34 +1,43 @@
 'use strict';
 
-const questions = new Map();
+const store = require('./store');
 
 const questionRepository = {
-  findById: async (id) => questions.get(id) || null,
-  listAll: async () => Array.from(questions.values()),
-  findByExam: async (examId) => Array.from(questions.values()).filter((q) => q.examId === examId),
+  findById: async (id) => store.state.questions.find(q => q.id === id) || null,
+  listAll: async () => store.state.questions,
+  findByExam: async (examId) => store.state.questions.filter((q) => q.examId === examId),
   create: async (question) => {
-    questions.set(question.id, question);
+    store.state.questions.push(question);
+    store.save();
     return question;
   },
   update: async (id, patch) => {
-    const existing = questions.get(id);
-    if (!existing) return null;
-    const merged = { ...existing, ...patch, id, updatedAt: new Date().toISOString() };
-    questions.set(id, merged);
+    const existingIndex = store.state.questions.findIndex(q => q.id === id);
+    if (existingIndex === -1) return null;
+    const merged = { ...store.state.questions[existingIndex], ...patch, id, updatedAt: new Date().toISOString() };
+    store.state.questions[existingIndex] = merged;
+    store.save();
     return merged;
   },
-  delete: async (id) => questions.delete(id),
-  deleteByExam: async (examId) => {
-    let count = 0;
-    for (const [id, q] of questions.entries()) {
-      if (q.examId === examId) {
-        questions.delete(id);
-        count += 1;
-      }
+  delete: async (id) => {
+    const existingIndex = store.state.questions.findIndex(q => q.id === id);
+    if (existingIndex !== -1) {
+      store.state.questions.splice(existingIndex, 1);
+      store.save();
+      return true;
     }
-    return count;
+    return false;
   },
-  reset: () => questions.clear(),
+  deleteByExam: async (examId) => {
+    const initialLength = store.state.questions.length;
+    store.state.questions = store.state.questions.filter(q => q.examId !== examId);
+    store.save();
+    return initialLength - store.state.questions.length;
+  },
+  reset: () => {
+    store.state.questions = [];
+    store.save();
+  },
 };
 
 module.exports = questionRepository;

@@ -2,8 +2,8 @@ import apiClient from './client';
 
 export const monitorApi = {
   getExams: async () => {
-    const res = await apiClient.get('/admin/exams'); // Assuming this exists based on ExamManagement
-    return res.data || [];
+    const res = await apiClient.get('/exams');
+    return res.data.exams || [];
   },
   
   getLiveAttempts: async (examId) => {

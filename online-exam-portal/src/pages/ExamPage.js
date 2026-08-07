@@ -13,9 +13,11 @@ import {
   Paper,
   Stack,
   Typography,
+  Snackbar,
 } from '@mui/material';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { io } from 'socket.io-client';
 
 import AppHeader from '../components/common/AppHeader';
 import LoadingScreen from '../components/common/LoadingScreen';
@@ -27,6 +29,8 @@ import { examApi } from '../api/examApi';
 import { submissionApi } from '../api/submissionApi';
 import { useCountdown } from '../hooks/useCountdown';
 import { setSession } from '../utils/storage';
+import { useAuth } from '../context/AuthContext';
+import config from '../config';
 
 const INSTRUCTIONS = [
   'There is no negative marking.',
@@ -39,6 +43,10 @@ const ExamPage = () => {
   const { examId } = useParams();
   const navigate = useNavigate();
   const submittedRef = useRef(false);
+  const { user } = useAuth();
+
+  const socketRef = useRef(null);
+  const attemptIdRef = useRef(user?.id || 'anonymous_attempt');
 
   const [exam, setExam] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -49,6 +57,7 @@ const ExamPage = () => {
   const [submitting, setSubmitting] = useState(false);
   const [confirmQuit, setConfirmQuit] = useState(false);
   const [tabSwitchWarning, setTabSwitchWarning] = useState(false);
+  const [broadcastMsg, setBroadcastMsg] = useState('');
 
   const totalSeconds = (exam?.duration || 0) * 60;
 
@@ -62,12 +71,6 @@ const ExamPage = () => {
         .map((q, idx) => ({ questionId: q.id, selectedIndex: answers[idx] }))
         .filter((a) => a.selectedIndex != null && !Number.isNaN(Number(a.selectedIndex)));
 
-      if (payload.length === 0) {
-        // No answers given – send a no-op so we still get a submission record
-        navigate('/result', { replace: true, state: { submission: null, examTitle: exam.title } });
-        return;
-      }
-
       const submission = await submissionApi.submit(exam.id, payload);
       setSession(null);
       navigate('/result', { replace: true, state: { submission, examTitle: exam.title } });
@@ -79,10 +82,60 @@ const ExamPage = () => {
     }
   }, [exam, answers, navigate]);
 
-  const secondsLeft = useCountdown(totalSeconds, {
+  const [secondsLeft, setSecondsLeft] = useCountdown(totalSeconds, {
     intervalMs: 1000,
     onEnd: handleSubmit,
   });
+
+  const handleSubmitRef = useRef(handleSubmit);
+  useEffect(() => {
+    handleSubmitRef.current = handleSubmit;
+  }, [handleSubmit]);
+
+  // Socket initialization
+  useEffect(() => {
+    if (!examId || !user) return;
+    
+    const baseUrl = config.apiBaseUrl.replace(/\/api$/, '');
+    const socket = io(baseUrl, { 
+      path: '/socket.io',
+      auth: { token: user.token } 
+    });
+    socketRef.current = socket;
+
+    socket.on('connect_error', (err) => {
+      console.error('[SOCKET STUDENT] Connection error:', err.message);
+    });
+    
+    socket.on('connect', () => {
+      console.log(`[SOCKET STUDENT] Connected, emitting join_exam for exam ${examId}`);
+      socket.emit('join_exam', {
+        attemptId: attemptIdRef.current,
+        examId,
+        studentName: user.name,
+        startedAt: new Date().toISOString()
+      });
+    });
+
+    socket.on('extend_time', (data) => {
+      setSecondsLeft(prev => prev + (data.minutes * 60));
+    });
+
+    socket.on('force_submit', () => {
+      console.log(`[SOCKET STUDENT] Received force_submit`);
+      if (handleSubmitRef.current) {
+        handleSubmitRef.current();
+      }
+    });
+
+    socket.on('broadcast', (data) => {
+      setBroadcastMsg(data.message);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [examId, user, setSecondsLeft]);
 
   useEffect(() => {
     let cancelled = false;
@@ -103,11 +156,19 @@ const ExamPage = () => {
     };
   }, [examId]);
 
-  // Detect tab switching for soft-warning
+  // Detect tab switching for soft-warning and flag
   useEffect(() => {
     const handler = () => {
       if (document.visibilityState !== 'visible') {
         setTabSwitchWarning(true);
+        if (socketRef.current) {
+          console.log(`[SOCKET STUDENT] Emitting flag_event`);
+          socketRef.current.emit('flag_event', {
+            attemptId: attemptIdRef.current,
+            type: 'tab_switch',
+            description: 'Student switched tabs or minimized the browser.'
+          });
+        }
       }
     };
     document.addEventListener('visibilitychange', handler);
@@ -269,6 +330,14 @@ const ExamPage = () => {
           </Button>
         </DialogActions>
       </Dialog>
+      
+      <Snackbar
+        open={!!broadcastMsg}
+        autoHideDuration={6000}
+        onClose={() => setBroadcastMsg('')}
+        message={broadcastMsg}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      />
     </>
   );
 };

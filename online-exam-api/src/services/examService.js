@@ -64,7 +64,21 @@ const requireExam = async (id) => {
   return exam;
 };
 
-const getAllExams = async () => examRepository.list();
+const getAllExams = async () => {
+  const exams = await examRepository.list();
+  const allQuestions = await questionRepository.listAll();
+  return exams.map(exam => {
+    let questionCount = 0;
+    if (exam.questionMode === 'fixed') {
+      questionCount = exam.fixedQuestions?.length || 0;
+    } else if (exam.questionMode === 'pool') {
+      questionCount = exam.poolSettings?.size || 0;
+    } else {
+      questionCount = allQuestions.filter(q => q.examId === exam.id).length;
+    }
+    return { ...exam, questionCount };
+  });
+};
 
 const updateExam = async (id, data) => {
   const updated = await examRepository.update(id, data);

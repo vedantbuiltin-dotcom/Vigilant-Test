@@ -109,7 +109,7 @@ const Dashboard = () => {
 
   const fetchSummary = async () => {
     try {
-      const res = await api.get('/api/admin/dashboard-summary');
+      const res = await api.get('/admin/dashboard-summary');
       if (res.data?.success) setData(res.data.summary);
     } catch (err) {
       console.error('Failed to load dashboard summary', err);

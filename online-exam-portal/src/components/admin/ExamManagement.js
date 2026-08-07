@@ -22,7 +22,9 @@ import PublishConfirmDialog from './PublishConfirmDialog';
 
 const StatusChip = ({ status }) => {
   let bgcolor, color;
-  switch (status) {
+  let displayStatus = (status || 'DRAFT').toUpperCase();
+  
+  switch (displayStatus) {
     case 'PUBLISHED':
       bgcolor = '#E1F5EE';
       color = '#085041';
@@ -34,7 +36,7 @@ const StatusChip = ({ status }) => {
     default:
       bgcolor = '#F6F4EF';
       color = '#6B6A62';
-      status = 'DRAFT';
+      displayStatus = 'DRAFT';
   }
 
   return (
@@ -52,7 +54,7 @@ const StatusChip = ({ status }) => {
         display: 'inline-block',
       }}
     >
-      {status}
+      {displayStatus}
     </Box>
   );
 };

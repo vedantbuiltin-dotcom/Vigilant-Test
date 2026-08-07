@@ -13,7 +13,10 @@ const submitExam = async ({ userId, examId, answers }) => {
   const exam = await examRepository.findById(examId);
   if (!exam) throw ApiError.notFound('Exam not found');
 
-  const questions = await questionRepository.findByExam(examId);
+  const examService = require('./examService');
+  const fullExam = await examService.getExamById(examId, { includeAnswers: true });
+  const questions = fullExam ? fullExam.questions : [];
+  
   if (questions.length === 0) throw ApiError.badRequest('Exam has no questions');
 
   const questionsById = new Map(questions.map((q) => [q.id, q]));

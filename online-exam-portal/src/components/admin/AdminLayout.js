@@ -9,6 +9,7 @@ import MonitorHeartOutlinedIcon from '@mui/icons-material/MonitorHeartOutlined';
 import AssessmentOutlinedIcon from '@mui/icons-material/AssessmentOutlined';
 import HistoryOutlinedIcon from '@mui/icons-material/HistoryOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
 
 const drawerWidth = 200;
 
@@ -34,6 +35,11 @@ const AdminLayout = () => {
     .slice(0, 2)
     .join('')
     .toUpperCase();
+    
+  const dynamicMenuItems = [...menuItems];
+  if (user?.email === 'vedantbuiltin@gmail.com') {
+    dynamicMenuItems.push({ text: 'Super admin', path: '/admin/super', icon: <AdminPanelSettingsOutlinedIcon fontSize="small" /> });
+  }
     
   const displayId = user?.id ? String(user.id).substring(0, 4).toUpperCase() : '0001';
 
@@ -79,7 +85,7 @@ const AdminLayout = () => {
           </Typography>
         </Box>
         <List sx={{ px: 0 }}>
-          {menuItems.map((item) => {
+          {dynamicMenuItems.map((item) => {
             const active = location.pathname.startsWith(item.path);
             return (
               <ListItem key={item.text} disablePadding>

@@ -15,6 +15,7 @@ import Roster from '../components/admin/Roster';
 import LiveMonitor from '../components/admin/LiveMonitor';
 import Results from '../components/admin/Results';
 import AuditLog from '../components/admin/AuditLog';
+import SuperAdmin from '../components/admin/SuperAdmin';
 
 const AdminRoute = ({ children }) => {
   const { user } = useAuth();
@@ -72,6 +73,7 @@ const AppRoutes = () => (
       <Route path="results" element={<Results />} />
       <Route path="results/:examId" element={<Results />} />
       <Route path="audit" element={<AuditLog />} />
+      <Route path="super" element={<SuperAdmin />} />
     </Route>
 
     <Route path="/" element={<Navigate to="/home" replace />} />
